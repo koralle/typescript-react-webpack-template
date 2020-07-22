@@ -24,7 +24,7 @@ const entry: webpack.Entry = {
 
 // 出力先の設定
 const output: webpack.Output = {
-  filename: 'bundle.js',
+  filename: 'js/bundle.js',
   path: outputPath,
 };
 
@@ -60,7 +60,9 @@ const styleUse: webpack.RuleSetUse = [
     loader: 'sass-loader',
     options: {
       implementation: Sass,
-      fiber: Fiber,
+      sassOptions: {
+        fiber: Fiber,
+      },
     },
   },
 ];
@@ -106,7 +108,7 @@ const plugin: webpack.Plugin[] = [
 
   // CSSは別ファイルとして出力する。
   new MiniCssExtractPlugin({
-    filename: 'index.css',
+    filename: 'css/index.css',
   }),
   // .envに記載した環境変数を取り込む
   new DotEnv(),
