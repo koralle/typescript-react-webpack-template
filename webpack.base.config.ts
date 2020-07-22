@@ -33,7 +33,7 @@ const resolve: webpack.Resolve = {
   extensions: ['.ts', '.tsx', '.js', '.jsx'],
 };
 
-// TypeScriptの変換の設定
+// .ts, .tsxファイルをJSモジュールに変換するための設定
 const typeScriptRule: webpack.RuleSetRule = {
   test: /\.(ts|tsx)?$/,
   use: [
@@ -44,39 +44,46 @@ const typeScriptRule: webpack.RuleSetRule = {
   exclude: /node_modules/,
 };
 
-// CSSの設定
+// .css, .sass, .scssファイルを.cssファイルに変換する手順
+const styleUse: webpack.RuleSetUse = [
+  // このLoaderの代わりにstyle-loaderを指定すると、
+  // .css, .sass, .scssファイルは最終的にJSモジュールに変換する。
+  MiniCssExtractPlugin.loader,
+  {
+    loader: 'css-loader',
+    // CSS内にurl("example.jpg")など画像への参照が含まれる場合
+    // その画像もWebpackのバンドルの対象になる。
+    // 画像ファイルをBase64エンコードする必要がなければfalseを指定すると良い。
+    options: { url: false },
+  },
+  {
+    loader: 'sass-loader',
+    options: {
+      implementation: Sass,
+      fiber: Fiber,
+    },
+  },
+];
+
+// .css, .sass, .scssファイルを.cssファイルに変換する設定
+// useは長いので切り分けた
 const styleSheetRule: webpack.RuleSetRule = {
   test: /\.(sass|css|scss)$/,
   exclude: /node_modules/,
-  use: [
-    {
-      loader: 'style-loader',
-    },
-    MiniCssExtractPlugin.loader,
-    {
-      loader: 'css-loader',
-      options: { url: true },
-    },
-    {
-      loader: 'sass-loader',
-      options: {
-        implementation: Sass,
-        fiber: Fiber,
-      },
-    },
-  ],
+  use: styleUse,
 };
 
-// ファイルの変換の設定
+// URLを通じて参照している静的ファイルをJSモジュールに変換する設定
 const fileRule: webpack.RuleSetRule = {
   test: /\.(gif|png|jpg|jpeg|svg|ttf|eot|wof|woff|woff2)$/,
 
   loader: 'url-loader',
 
   options: {
-    // 20KiB以下の画像ファイルはJSにバンドルする
-    limit: 20480,
-    name: './images/[name].[ext]',
+    // 8KiB以下の画像ファイルはJSモジュールとしてバンドルする
+    // それ以外の画像はそのまま画像ファイルとして出力する。
+    limit: 8192,
+    name: './statics/[name].[ext]',
   },
 };
 
