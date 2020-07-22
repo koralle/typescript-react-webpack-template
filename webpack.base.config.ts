@@ -4,6 +4,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import DotEnv from 'dotenv-webpack';
+import Sass from 'sass';
+import Fiber from 'fibers';
 
 // ビルド後のJSファイルは./dist直下に配置する
 // 開発用のWebpack-dev-serverでもこのPathを指定する必要がある
@@ -47,12 +49,21 @@ const styleSheetRule: webpack.RuleSetRule = {
   test: /\.(sass|css|scss)$/,
   exclude: /node_modules/,
   use: [
+    {
+      loader: 'style-loader',
+    },
     MiniCssExtractPlugin.loader,
     {
       loader: 'css-loader',
       options: { url: true },
     },
-    'sass-loader',
+    {
+      loader: 'sass-loader',
+      options: {
+        implementation: Sass,
+        fiber: Fiber,
+      },
+    },
   ],
 };
 
