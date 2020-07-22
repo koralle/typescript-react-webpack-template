@@ -29,6 +29,9 @@ const output: webpack.Output = {
 };
 
 // モジュール解決の設定
+// ここで列挙した拡張子のファイルは、import文を記述するときに拡張子が省略できる。
+// 下の例で言うと、./style.scssをimportするときに
+// import './style'; とかくとNG
 const resolve: webpack.Resolve = {
   extensions: ['.ts', '.tsx', '.js', '.jsx'],
 };
@@ -59,9 +62,9 @@ const styleUse: webpack.RuleSetUse = [
   {
     loader: 'sass-loader',
     options: {
-      implementation: Sass,
+      implementation: Sass, // dart-sassを指している。
       sassOptions: {
-        fiber: Fiber,
+        fiber: Fiber, // dart-sassを採用する場合は一緒に使うと良いらしい。
       },
     },
   },
