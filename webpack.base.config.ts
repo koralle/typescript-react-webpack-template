@@ -89,7 +89,7 @@ const fileRule: webpack.RuleSetRule = {
     // 8KiB以下の画像ファイルはJSモジュールとしてバンドルする
     // それ以外の画像はそのまま画像ファイルとして出力する。
     limit: 8192,
-    name: './statics/[name].[ext]',
+    name: './assets/[name].[ext]',
   },
 };
 
@@ -104,6 +104,8 @@ const module: webpack.Module = {
 const plugin: webpack.Plugin[] = [
   new HtmlWebpackPlugin({
     template: distEntryPoint,
+    // Cache Bustingを有効化してブラウザキャッシュを回避する
+    // 静的ファイルにユニークな識別子(hash)を付加することで実現する。
     hash: true,
   }),
 
