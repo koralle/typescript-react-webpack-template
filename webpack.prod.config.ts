@@ -2,9 +2,10 @@ import { merge } from 'webpack-merge';
 import base from './webpack.base.config';
 import webpack from 'webpack';
 import TerserPlugin from 'terser-webpack-plugin';
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 
 // 本番用のWebpackの最適化設定
-const prodOptimization = {
+const prodOptimization: webpack.Options.Optimization = {
   minimizer: [
     new TerserPlugin({
       // コメントを全て削除する
@@ -14,6 +15,8 @@ const prodOptimization = {
         compress: { drop_console: true },
       },
     }),
+    // 本番用ビルド時のCSS圧縮プラグイン
+    new OptimizeCSSAssetsPlugin(),
   ],
 };
 
