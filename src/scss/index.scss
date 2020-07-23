@@ -1,0 +1,13 @@
+$backgroundColor: rebeccapurple;
+$mainFontColor: white;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: $backgroundColor;
+
+  h1 {
+    color: $mainFontColor;
+  }
+}
