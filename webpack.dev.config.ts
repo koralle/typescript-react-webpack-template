@@ -6,7 +6,7 @@ import WebpackDevServer from 'webpack-dev-server';
 // Webpack-dev-Serverの設定
 const devServer: WebpackDevServer.Configuration = {
   hot: true,
-  open: true,
+  open: true, // サーバー起動時にブラウザを開く
   publicPath: '/',
   contentBase: outputPath,
   watchContentBase: true,
