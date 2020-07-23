@@ -6,6 +6,12 @@ TypeScript + React + Webpack で開発をするためのテンプレートです
 
 改善の余地は結構あると思います。
 
+## 動作環境
+
+- node v14.4.0
+- npm v6.14.5
+- nodenv 1.3.2
+
 ## Installation
 
 Git クローン
