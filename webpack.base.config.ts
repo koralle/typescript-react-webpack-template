@@ -3,6 +3,7 @@ import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import HardSourceWebpackPlugin from 'hard-source-webpack-plugin';
 import DotEnv from 'dotenv-webpack';
 import Sass from 'sass';
 import Fiber from 'fibers';
@@ -115,6 +116,9 @@ const plugin: webpack.Plugin[] = [
   }),
   // .envに記載した環境変数を取り込む
   new DotEnv(),
+
+  // 中間キャッシュを作ってビルド時間を短縮
+  new HardSourceWebpackPlugin(),
 ];
 
 // 既定のWebpackの設定
