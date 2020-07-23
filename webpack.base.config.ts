@@ -117,7 +117,9 @@ const plugin: webpack.Plugin[] = [
   // .envに記載した環境変数を取り込む
   new DotEnv(),
 
-  // 中間キャッシュを作ってビルド時間を短縮
+  // 中間キャッシュを作ってビルド時間を短縮するプラグイン
+  // 初回は中間キャッシュを作る
+  // 2回目からビルド時間が短縮される
   new HardSourceWebpackPlugin(),
 ];
 
